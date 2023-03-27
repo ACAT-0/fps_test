@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://gfcxdo5106uh"]
+
+[ext_resource type="Texture2D" uid="uid://c3b5snp0nxr0" path="res://testtile.png" id="1_vwqla"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_eydb2"]
+rough = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gktf4"]
+margin = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6oxh8"]
+albedo_texture = ExtResource("1_vwqla")
+heightmap_enabled = true
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5bh0k"]
+material = SubResource("StandardMaterial3D_6oxh8")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7l7t"]
+diffuse_mode = 1
+albedo_texture = ExtResource("1_vwqla")
+metallic = 1.0
+metallic_texture = ExtResource("1_vwqla")
+metallic_texture_channel = 2
+heightmap_enabled = true
+texture_filter = 0
+
+[node name="StaticBody3D" type="StaticBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_eydb2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.50126, 0)
+shape = SubResource("BoxShape3D_gktf4")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+rotation_order = 0
+pixel_size = 0.0625
+shaded = true
+alpha_cut = 2
+texture_filter = 0
+texture = ExtResource("1_vwqla")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+visible = false
+mesh = SubResource("PlaneMesh_5bh0k")
+surface_material_override/0 = SubResource("StandardMaterial3D_j7l7t")

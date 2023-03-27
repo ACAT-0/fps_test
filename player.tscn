@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://5egntfkv1xwb"]
+
+[ext_resource type="Script" path="res://playerBody.cs" id="1_6r25k"]
+[ext_resource type="Script" path="res://main_camera.cs" id="2_xlqug"]
+[ext_resource type="Texture2D" uid="uid://sc807y3k1521" path="res://hand.png" id="3_ue0rk"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2sbhw"]
+radius = 0.34556
+height = 1.43536
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+script = ExtResource("1_6r25k")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, -3.48787e-16, 3.48787e-16, 3.48787e-16, 1, -3.48787e-16, -3.48787e-16, 3.48787e-16, 1, 2.08165e-12, 0.2018, 0.336748)
+current = true
+fov = 100.0
+script = ExtResource("2_xlqug")
+
+[node name="overlay" type="CanvasGroup" parent="Camera3D"]
+
+[node name="hand" type="Sprite2D" parent="Camera3D/overlay"]
+texture_filter = 1
+position = Vector2(201, 112)
+scale = Vector2(1.65833, 1.68148)
+texture = ExtResource("3_ue0rk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
+shape = SubResource("CapsuleShape3D_2sbhw")

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://s21wmmnme5t2"]
+
+[ext_resource type="Texture2D" uid="uid://cmhtummhbi0fq" path="res://benjamin.png" id="2_bv0bp"]
+[ext_resource type="Script" path="res://basicenemy.cs" id="2_fpwig"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w8uch"]
+height = 2.4597
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+collision_layer = 4352
+collision_mask = 257
+script = ExtResource("2_fpwig")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.244586, 0)
+shape = SubResource("CapsuleShape3D_w8uch")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -0.00186157, 0.26314, -0.00406981)
+billboard = 2
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("2_bv0bp")

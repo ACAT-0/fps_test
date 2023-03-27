@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://tgtu2nfebau8"]
+
+[ext_resource type="Texture2D" uid="uid://c3b5snp0nxr0" path="res://testtile.png" id="1_s88b4"]
+
+[resource]
+albedo_texture = ExtResource("1_s88b4")
+uv1_scale = Vector3(3, 2, 2.8)
+uv1_offset = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
+texture_filter = 0
+point_size = 111.1

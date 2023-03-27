@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://jhdjo6q3i16i"]
+
+[ext_resource type="Script" path="res://playerBullet.cs" id="1_rhy8b"]
+[ext_resource type="Texture2D" uid="uid://cvhvko5wh1eyv" path="res://icon.svg" id="2_rgtmj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bda8m"]
+radius = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_c1tyi"]
+radius = 1.0
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_rhy8b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_bda8m")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+billboard = 1
+alpha_cut = 2
+texture = ExtResource("2_rgtmj")
+
+[node name="hurtbox" type="Area3D" parent="."]
+collision_mask = 4096
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="hurtbox"]
+shape = SubResource("SphereShape3D_c1tyi")
