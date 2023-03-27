@@ -1,0 +1,11 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://c3208b4ig54eu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eywa5"]
+shading_mode = 0
+diffuse_mode = 1
+albedo_color = Color(0.996078, 0.121569, 0, 1)
+
+[resource]
+material = SubResource("StandardMaterial3D_eywa5")
+radius = 0.1
+height = 0.2

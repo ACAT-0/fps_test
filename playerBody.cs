@@ -6,6 +6,7 @@ public partial class playerBody : CharacterBody3D
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
     public PackedScene bullet;
+    public PackedScene benjamin;
     public float SpeedBoost;
     public Node3D MainNode;
     public Camera3D Camera;
@@ -22,6 +23,7 @@ public partial class playerBody : CharacterBody3D
         Camera = GetNode<Camera3D>("Camera3D");
         GunOverlay = GetNode<Sprite2D>("Camera3D/overlay/hand");
         bullet = ResourceLoader.Load<PackedScene>("res://playerBullet.tscn");
+        benjamin = ResourceLoader.Load<PackedScene>("res://basicTestEnemy.tscn");
         MainNode = GetParent<Node3D>();
         FireDelay = 0;
     }
@@ -100,6 +102,12 @@ public partial class playerBody : CharacterBody3D
 			_dir.Z *= 30.5f;
             velCopy.Y = 0;
             _dir.Y = 0;
+        }
+
+        if (Input.IsActionJustPressed("ui_right")) {
+            CharacterBody3D newBenjamin = benjamin.Instantiate<CharacterBody3D>();
+            newBenjamin.Position = Position;
+            MainNode.AddChild(newBenjamin);
         }
 
         if (Input.IsMouseButtonPressed(MouseButton.Left) & FireDelay > 0.5f) {

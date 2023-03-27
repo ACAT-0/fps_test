@@ -1,10 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://s21wmmnme5t2"]
+[gd_scene load_steps=6 format=3 uid="uid://s21wmmnme5t2"]
 
-[ext_resource type="Texture2D" uid="uid://cmhtummhbi0fq" path="res://benjamin.png" id="2_bv0bp"]
 [ext_resource type="Script" path="res://basicenemy.cs" id="2_fpwig"]
+[ext_resource type="Texture2D" uid="uid://cmhtummhbi0fq" path="res://benjamin.png" id="2_s0ofg"]
+[ext_resource type="SphereMesh" uid="uid://c3208b4ig54eu" path="res://particleMeshes/bloodSphereParticle.tres" id="3_74hjt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_w8uch"]
 height = 2.4597
+
+[sub_resource type="Curve" id="Curve_vpc45"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 collision_layer = 4352
@@ -15,9 +21,34 @@ script = ExtResource("2_fpwig")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.244586, 0)
 shape = SubResource("CapsuleShape3D_w8uch")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="sprite" type="Sprite3D" parent="."]
 transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, -0.00186157, 0.26314, -0.00406981)
 billboard = 2
 alpha_cut = 1
 texture_filter = 0
-texture = ExtResource("2_bv0bp")
+texture = ExtResource("2_s0ofg")
+
+[node name="blood" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.342628, 0)
+emitting = false
+amount = 10
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.2
+randomness = 0.5
+fixed_fps = 25
+mesh = ExtResource("3_74hjt")
+spread = 180.0
+initial_velocity_max = 5.0
+linear_accel_min = -5.0
+linear_accel_max = 5.0
+radial_accel_min = -10.0
+radial_accel_max = 10.0
+damping_max = 5.0
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.5
+color = Color(1, 0.12549, 0.0862745, 1)
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+hue_variation_curve = SubResource("Curve_vpc45")

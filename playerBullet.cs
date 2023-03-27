@@ -23,7 +23,8 @@ public partial class playerBullet : CharacterBody3D
             if (body.HasMethod("IsEnemy"))
             {
                 body.Call("TakeDamage", 1);
-				this.QueueFree();
+                body.Call("EmitBlood");
+                this.QueueFree();
             }
 		} 
 		MoveAndSlide();
