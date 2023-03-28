@@ -14,12 +14,14 @@ public partial class basicenemy : CharacterBody3D
     public Sprite3D sprite;
 
     public CpuParticles3D bloodNode;
+    public CpuParticles3D boomNode;
     public bool CanJump;
     public int hitpoints;
     public Random rng;
     public void EmitBlood() {
         if (ActiveAI == true)
         {
+            bloodNode.Amount = 30;
             bloodNode.Emitting = true;
         }
     }
@@ -31,6 +33,9 @@ public partial class basicenemy : CharacterBody3D
         ActiveAI = true;
         DeathAnimationTimer = 0;
         bloodNode = GetNode<CpuParticles3D>("blood");
+         boomNode = GetNode<CpuParticles3D>("boom");
+        boomNode.Visible = false;
+        boomNode.Emitting = false;
         sprite = GetNode<Sprite3D>("sprite");
     }
 
@@ -52,7 +57,7 @@ public partial class basicenemy : CharacterBody3D
             );
             if (Position.DistanceTo(playerNode.Position) < 30)
             {
-                velocity += new Vector3(targetVelocity.X, velocity.Y, targetVelocity.Z).Normalized();
+                velocity += new Vector3(targetVelocity.X, 0, targetVelocity.Z).Normalized() * 100 * dt;
             }
             velocity.X = Math.Clamp(velocity.X, -10, 10);
             velocity.Z = Math.Clamp(velocity.Z, -10, 10);
@@ -80,7 +85,7 @@ public partial class basicenemy : CharacterBody3D
             {
                 if (CanJump == true)
                 {
-                    velocity.Y = 25;
+                    velocity.Y = 35;
                     CanJump = false;
                 }
                 else { velocity.Y -= 100 * (float)delta; }
@@ -105,10 +110,12 @@ public partial class basicenemy : CharacterBody3D
             
             if (DeathAnimationTimer < 0.1f)
             {
+                boomNode.Visible = true;
+                boomNode.Emitting = true;
                 bloodNode.Amount = 40;
                 bloodNode.Emitting = true;
             }
-            if (DeathAnimationTimer > 2f) {
+            if (DeathAnimationTimer > 1f) {
                 this.QueueFree();
             }
         }

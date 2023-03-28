@@ -18,21 +18,21 @@ public partial class playerBody : CharacterBody3D
     public Camera3D Camera;
 
     public float camOffset;
-    public Sprite2D GunOverlay;
+    public AnimatedSprite2D GunOverlay;
 
     public float FireDelay;
-
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	public override void _Ready() {
         SpeedBoost = 0;
         WeaponTypes = new PlayerWeapon[] {
-            new PlayerWeapon(3,0.5f, "pistol"),
+            new PlayerWeapon(4,0.5f, "pistol"),
             new PlayerWeapon(1,0.1f, "machinegun"),
+            new PlayerWeapon(1,1.5f, "shotgun"),
         };
         weapon = WeaponTypes[0];
         Camera = GetNode<Camera3D>("Camera3D");
-        GunOverlay = GetNode<Sprite2D>("Camera3D/overlay/hand");
+        GunOverlay = GetNode<AnimatedSprite2D>("Camera3D/overlay/hand");
         bullet = ResourceLoader.Load<PackedScene>("res://playerBullet.tscn");
         benjamin = ResourceLoader.Load<PackedScene>("res://basicTestEnemy.tscn");
         gunSound = GetNode<AudioStreamPlayer>("GUNSOUND");
@@ -128,27 +128,57 @@ public partial class playerBody : CharacterBody3D
         // this code sucks so much ass
         // please god find out a better way to do this
         if (Input.IsActionJustPressed("weapon-1")) {
+            GunOverlay.Play("pistol");
             weapon = WeaponTypes[0];
         }
         if (Input.IsActionJustPressed("weapon-2")) {
+            GunOverlay.Play("uzi");
             weapon = WeaponTypes[1];
         }
         if (Input.IsActionJustPressed("weapon-3")) {
             weapon = WeaponTypes[2];
+            GunOverlay.Play("shotgun");
         }
 
         if (Input.IsMouseButtonPressed(MouseButton.Left) & FireDelay > weapon.MaxFireDelay) {
             if (weapon.Name == "pistol" | weapon.Name == "machinegun")
             {
-                // gunSound.PitchScale = new Random().NextSingle() + 1f;
-                // gunSound.Play();
+                gunSound.PitchScale = 1f;
+                if (weapon.Name == "machinegun") {
+                    gunSound.PitchScale = 2f;
+                }
+                gunSound.Play();
                 FireDelay = 0;
                 CharacterBody3D newBullet = bullet.Instantiate<CharacterBody3D>();
-                newBullet.Velocity = -camXform.Basis.Z * 205;
+                newBullet.Velocity = -camXform.Basis.Z * 40;
                 newBullet.Call("SetDamage", weapon.Damage);
-                newBullet.Position = Position + (newBullet.Velocity * dt) + new Vector3(1f, 0.5f, 0) + Velocity * dt;
+                newBullet.Position = Position + -camXform.Basis.Z + new Vector3(0,0.6f,0) + camXform.Basis.X; //+(newBullet.Velocity * dt);
                 MainNode.AddChild(newBullet);
             }
+            else if (weapon.Name == "shotgun")
+            {
+                gunSound.PitchScale = 0.8f;
+                gunSound.Play();
+                gunSound.PitchScale = 2f;
+                gunSound.Play();
+                FireDelay = 0f;
+                Random rng = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+
+                    CharacterBody3D newBullet = bullet.Instantiate<CharacterBody3D>();
+                    newBullet.Velocity = -camXform.Basis.Z * 70 + new Vector3(rng.NextSingle()*rng.Next(-30,10),rng.NextSingle()*30,rng.NextSingle()*30);
+                    newBullet.Call("SetDamage", 1);
+                    newBullet.Call("SetType", "shell");
+                    newBullet.Position = Position + -camXform.Basis.Z * 2 + camXform.Basis.X; //+(newBullet.Velocity * dt);
+                    MainNode.AddChild(newBullet);
+                }
+                
+            }
+        }
+
+        if (Input.IsMouseButtonPressed(MouseButton.Right) & FireDelay > weapon.MaxFireDelay) {
+            
         }
 
         if (Input.IsActionPressed("slide") & IsOnFloor()) {

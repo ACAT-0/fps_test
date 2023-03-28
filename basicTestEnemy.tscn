@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://s21wmmnme5t2"]
+[gd_scene load_steps=8 format=3 uid="uid://s21wmmnme5t2"]
 
 [ext_resource type="Script" path="res://basicenemy.cs" id="2_fpwig"]
 [ext_resource type="Texture2D" uid="uid://cmhtummhbi0fq" path="res://benjamin.png" id="2_s0ofg"]
@@ -11,6 +11,14 @@ height = 2.4597
 min_value = -1.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wfs40"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.207843)
+
+[sub_resource type="SphereMesh" id="SphereMesh_8vt3g"]
+material = SubResource("StandardMaterial3D_wfs40")
+radius = 0.05
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 collision_layer = 4352
@@ -30,6 +38,7 @@ texture = ExtResource("2_s0ofg")
 
 [node name="blood" type="CPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.342628, 0)
+gi_lightmap_scale = 1
 emitting = false
 amount = 10
 lifetime = 0.5
@@ -38,8 +47,10 @@ explosiveness = 0.2
 randomness = 0.5
 fixed_fps = 25
 mesh = ExtResource("3_74hjt")
-spread = 180.0
-initial_velocity_max = 5.0
+direction = Vector3(2.08165e-12, 1, 2.08165e-12)
+spread = 50.0
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
 linear_accel_min = -5.0
 linear_accel_max = 5.0
 radial_accel_min = -10.0
@@ -52,3 +63,24 @@ color = Color(1, 0.12549, 0.0862745, 1)
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 hue_variation_curve = SubResource("Curve_vpc45")
+
+[node name="boom" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 30
+lifetime = 2.0
+one_shot = true
+preprocess = 2.72
+speed_scale = 2.0
+mesh = SubResource("SphereMesh_8vt3g")
+direction = Vector3(2.08165e-12, 1, 2.08165e-12)
+spread = 11.81
+gravity = Vector3(2.08165e-12, -5, 2.08165e-12)
+initial_velocity_min = 1.0
+initial_velocity_max = 5.0
+angular_velocity_min = -5.0
+angular_velocity_max = 5.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="boom"]
+light_color = Color(1, 0.0666667, 0, 1)
+light_energy = 5.19
+light_size = 1.0

@@ -1,9 +1,44 @@
-[gd_scene load_steps=6 format=3 uid="uid://5egntfkv1xwb"]
+[gd_scene load_steps=11 format=3 uid="uid://5egntfkv1xwb"]
 
 [ext_resource type="Script" path="res://playerBody.cs" id="1_6r25k"]
 [ext_resource type="Script" path="res://main_camera.cs" id="2_xlqug"]
-[ext_resource type="Texture2D" uid="uid://sc807y3k1521" path="res://hand.png" id="3_ue0rk"]
-[ext_resource type="AudioStream" uid="uid://b27v1lhfi31xx" path="res://audio/pistol1.wav" id="4_ccy0f"]
+[ext_resource type="Texture2D" uid="uid://cl0g033njnshm" path="res://GUN.png" id="3_fbfxs"]
+[ext_resource type="AudioStream" uid="uid://d31aufmbc3nag" path="res://audio/gun.wav" id="4_q4rry"]
+[ext_resource type="Texture2D" uid="uid://cd22q1tx3vsy7" path="res://uzee.png" id="4_q5puv"]
+[ext_resource type="Texture2D" uid="uid://blxso60kjy3vl" path="res://shotty.png" id="4_y3n35"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u4iqh"]
+blend_mode = 3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m0cdg"]
+blend_mode = 1
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i4pvs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fbfxs")
+}],
+"loop": true,
+"name": &"pistol",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_y3n35")
+}],
+"loop": true,
+"name": &"shotgun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q5puv")
+}],
+"loop": true,
+"name": &"uzi",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2sbhw"]
 radius = 0.34556
@@ -21,16 +56,41 @@ script = ExtResource("2_xlqug")
 
 [node name="overlay" type="CanvasGroup" parent="Camera3D"]
 
-[node name="hand" type="Sprite2D" parent="Camera3D/overlay"]
+[node name="ColorRect" type="ColorRect" parent="Camera3D/overlay"]
+visible = false
+z_index = 2
+material = SubResource("CanvasItemMaterial_u4iqh")
+offset_right = 405.0
+offset_bottom = 225.0
+color = Color(1, 0.890196, 0.501961, 0.717647)
+
+[node name="Line2D" type="Line2D" parent="Camera3D/overlay"]
+position = Vector2(62, 5)
+scale = Vector2(1.25, 2)
+points = PackedVector2Array(104.8, 53, 119.2, 53)
+width = 0.8
+default_color = Color(0.921569, 0.592157, 0.380392, 0.34902)
+
+[node name="Line2D2" type="Line2D" parent="Camera3D/overlay"]
+position = Vector2(30, -102)
+scale = Vector2(1.5625, 4)
+points = PackedVector2Array(110.08, 51.25, 110.08, 58)
+width = 1.0
+default_color = Color(0.921569, 0.592157, 0.380392, 0.34902)
+
+[node name="hand" type="AnimatedSprite2D" parent="Camera3D/overlay"]
+modulate = Color(0.968627, 0.847059, 0.486275, 1)
 texture_filter = 1
-position = Vector2(201, 112)
-scale = Vector2(1.65833, 1.68148)
-texture = ExtResource("3_ue0rk")
+material = SubResource("CanvasItemMaterial_m0cdg")
+position = Vector2(253, 144)
+scale = Vector2(2.60448, 2.60448)
+sprite_frames = SubResource("SpriteFrames_i4pvs")
+animation = &"pistol"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 shape = SubResource("CapsuleShape3D_2sbhw")
 
 [node name="GUNSOUND" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_ccy0f")
+stream = ExtResource("4_q4rry")
 max_polyphony = 10
