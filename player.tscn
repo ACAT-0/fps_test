@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://5egntfkv1xwb"]
+[gd_scene load_steps=6 format=3 uid="uid://5egntfkv1xwb"]
 
 [ext_resource type="Script" path="res://playerBody.cs" id="1_6r25k"]
 [ext_resource type="Script" path="res://main_camera.cs" id="2_xlqug"]
 [ext_resource type="Texture2D" uid="uid://sc807y3k1521" path="res://hand.png" id="3_ue0rk"]
+[ext_resource type="AudioStream" uid="uid://b27v1lhfi31xx" path="res://audio/pistol1.wav" id="4_ccy0f"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2sbhw"]
 radius = 0.34556
@@ -29,3 +30,7 @@ texture = ExtResource("3_ue0rk")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
 shape = SubResource("CapsuleShape3D_2sbhw")
+
+[node name="GUNSOUND" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ccy0f")
+max_polyphony = 10

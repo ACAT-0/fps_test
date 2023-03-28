@@ -7,7 +7,6 @@ albedo_texture = ExtResource("1_c0ftc")
 metallic = 1.0
 metallic_specular = 1.0
 metallic_texture = ExtResource("1_c0ftc")
-metallic_texture_channel = 4
 detail_mask = ExtResource("1_c0ftc")
 detail_albedo = ExtResource("1_c0ftc")
 uv1_scale = Vector3(3, 2, 2)
@@ -32,6 +31,7 @@ detail_mask = ExtResource("1_c0ftc")
 detail_albedo = ExtResource("1_c0ftc")
 uv1_scale = Vector3(6, 4, 4)
 texture_filter = 0
+grow_amount = 0.1
 distance_fade_min_distance = 20.0
 distance_fade_max_distance = 0.0
 
@@ -59,7 +59,6 @@ shape = SubResource("BoxShape3D_s83ne")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08165e-12, 2.08165e-12, 2.08165e-12)
-visible = false
 mesh = SubResource("BoxMesh_bwrrw")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]

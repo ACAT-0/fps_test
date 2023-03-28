@@ -27,7 +27,7 @@ public partial class basicenemy : CharacterBody3D
     {
         playerNode = GetNode<CharacterBody3D>("/root/Node3D/player");
         rng = new Random();
-        hitpoints = 3;
+        hitpoints = 10;
         ActiveAI = true;
         DeathAnimationTimer = 0;
         bloodNode = GetNode<CpuParticles3D>("blood");

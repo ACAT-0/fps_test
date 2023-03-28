@@ -1,12 +1,18 @@
 using Godot;
 using System;
-
+using fps_test;
 public partial class playerBody : CharacterBody3D
 {
-	public const float Speed = 5.0f;
+    public PlayerWeapon weapon;
+    public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
     public PackedScene bullet;
     public PackedScene benjamin;
+
+    public AudioStreamPlayer gunSound;
+
+
+    public PlayerWeapon[] WeaponTypes;
     public float SpeedBoost;
     public Node3D MainNode;
     public Camera3D Camera;
@@ -20,10 +26,16 @@ public partial class playerBody : CharacterBody3D
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	public override void _Ready() {
         SpeedBoost = 0;
+        WeaponTypes = new PlayerWeapon[] {
+            new PlayerWeapon(3,0.5f, "pistol"),
+            new PlayerWeapon(1,0.1f, "machinegun"),
+        };
+        weapon = WeaponTypes[0];
         Camera = GetNode<Camera3D>("Camera3D");
         GunOverlay = GetNode<Sprite2D>("Camera3D/overlay/hand");
         bullet = ResourceLoader.Load<PackedScene>("res://playerBullet.tscn");
         benjamin = ResourceLoader.Load<PackedScene>("res://basicTestEnemy.tscn");
+        gunSound = GetNode<AudioStreamPlayer>("GUNSOUND");
         MainNode = GetParent<Node3D>();
         FireDelay = 0;
     }
@@ -104,18 +116,39 @@ public partial class playerBody : CharacterBody3D
             _dir.Y = 0;
         }
 
+
+        // FOR TESTING PURPOSES
         if (Input.IsActionJustPressed("ui_right")) {
             CharacterBody3D newBenjamin = benjamin.Instantiate<CharacterBody3D>();
             newBenjamin.Position = Position;
             MainNode.AddChild(newBenjamin);
         }
 
-        if (Input.IsMouseButtonPressed(MouseButton.Left) & FireDelay > 0.5f) {
-            FireDelay = 0;
-            CharacterBody3D newBullet = bullet.Instantiate<CharacterBody3D>();
-            newBullet.Velocity = -camXform.Basis.Z * 205;
-            newBullet.Position = Position + (newBullet.Velocity * dt) + new Vector3(1f,0.5f,0) + Velocity * dt;
-            MainNode.AddChild(newBullet);
+
+        // this code sucks so much ass
+        // please god find out a better way to do this
+        if (Input.IsActionJustPressed("weapon-1")) {
+            weapon = WeaponTypes[0];
+        }
+        if (Input.IsActionJustPressed("weapon-2")) {
+            weapon = WeaponTypes[1];
+        }
+        if (Input.IsActionJustPressed("weapon-3")) {
+            weapon = WeaponTypes[2];
+        }
+
+        if (Input.IsMouseButtonPressed(MouseButton.Left) & FireDelay > weapon.MaxFireDelay) {
+            if (weapon.Name == "pistol" | weapon.Name == "machinegun")
+            {
+                // gunSound.PitchScale = new Random().NextSingle() + 1f;
+                // gunSound.Play();
+                FireDelay = 0;
+                CharacterBody3D newBullet = bullet.Instantiate<CharacterBody3D>();
+                newBullet.Velocity = -camXform.Basis.Z * 205;
+                newBullet.Call("SetDamage", weapon.Damage);
+                newBullet.Position = Position + (newBullet.Velocity * dt) + new Vector3(1f, 0.5f, 0) + Velocity * dt;
+                MainNode.AddChild(newBullet);
+            }
         }
 
         if (Input.IsActionPressed("slide") & IsOnFloor()) {

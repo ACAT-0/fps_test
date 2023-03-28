@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjhfk6qhxj8rh"]
+
+[ext_resource type="Texture2D" uid="uid://cnsig71aqvby3" path="res://lanturn.png" id="1_ij2nj"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_iyvry"]
+height = 3.32178
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.0187085, -0.999825, 0, 0.999825, -0.0187085, 0.0323324, -8.2094, -0.516766)
+light_color = Color(0.980392, 0.870588, 0.639216, 1)
+light_energy = 3.383
+light_size = 1000.0
+shadow_enabled = true
+spot_range = 30.0
+spot_attenuation = 0.0334929
+spot_angle = 72.72
+spot_angle_attenuation = 0.615572
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32257, 0)
+shape = SubResource("CylinderShape3D_iyvry")
+
+[node name="sprite" type="Sprite3D" parent="."]
+transform = Transform3D(14, 0, 0, 0, 14, 0, 0, 0, 14, -0.00186157, 1.39149, -0.00406981)
+billboard = 2
+alpha_cut = 1
+texture_filter = 0
+texture = ExtResource("1_ij2nj")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.029509, 0.999565, 0, -0.999565, 0.029509, 0, 2.51767, -0.764059)
+light_color = Color(0.968627, 0.878431, 0.686275, 1)
+light_energy = 3.383
+light_size = 1000.0
+shadow_enabled = true
+spot_range = 30.0
+spot_attenuation = 0.0334929
+spot_angle = 72.72
+spot_angle_attenuation = 0.615572
